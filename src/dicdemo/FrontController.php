@@ -1,6 +1,9 @@
 <?php
 namespace dicdemo;
 
+/**
+ * @singleton
+ */
 class FrontController {
 
     public function run() {
@@ -8,29 +11,13 @@ class FrontController {
             'userId' => 1
         );
 
-        $controller = new \dicdemo\controllers\BirthdayController(new \dicdemo\output\ConsoleOutput());
+        $dicConfiguration = new \rg\injektor\Configuration($this->getDataDir() . '/dic_config.php', null);
+        $dic = new \rg\injektor\DependencyInjectionContainer($dicConfiguration);
 
-        $memcachedConnector = new \dicdemo\services\connectors\cache\MemcachedUserConnector(
-            new \dicdemo\services\connectors\sqlite\SqliteUserConnector(
-                new \dicdemo\services\connectors\sqlite\SqliteConnection(
-                    $this
-                )
-            ),
-            new \dicdemo\services\connectors\cache\MemcachedConnection()
-        );
-        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
-        $memcachedConnector->setLogger($loggerProvider->get());
+        /** @var \dicdemo\controllers\BirthdayController $controller  */
+        $controller = $dic->getInstanceOfClass(\dicdemo\controllers\BirthdayController::$CLASS);
 
-        $userService = new \dicdemo\services\UserService(
-            $memcachedConnector
-        );
-        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
-        $userService->setLogger($loggerProvider->get());
-
-        $controller->run(
-            $userService,
-            $parameters['userId']
-        );
+        $dic->callMethodOnObject($controller, 'run', $parameters);
     }
 
     /**

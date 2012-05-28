@@ -21,6 +21,7 @@ class UserService {
     }
 
     /**
+     * @inject
      * @param \dicdemo\services\connectors\UserConnector $userConnector
      */
     public function __construct(\dicdemo\services\connectors\UserConnector $userConnector) {

@@ -26,8 +26,10 @@ class MemcachedUserConnector implements \dicdemo\services\connectors\UserConnect
     }
 
     /**
+     * @inject
      * @param \dicdemo\services\connectors\UserConnector $innerConnector
      * @param \dicdemo\services\connectors\cache\MemcachedConnection $cacheConnection
+     * @named inner $innerConnector
      */
     public function __construct(\dicdemo\services\connectors\UserConnector $innerConnector,
                                 \dicdemo\services\connectors\cache\MemcachedConnection $cacheConnection) {

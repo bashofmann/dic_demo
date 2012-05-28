@@ -1,6 +1,7 @@
 {
     "require":{
-        "monolog/monolog":"*"
+        "monolog/monolog":"*",
+        "rg/injektor":"*"
     },
     "autoload":{
         "psr-0":{

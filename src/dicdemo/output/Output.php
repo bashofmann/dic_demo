@@ -1,6 +1,9 @@
 <?php
 namespace dicdemo\output;
 
+/**
+ * @implementedBy \dicdemo\output\ConsoleOutput
+ */
 interface Output {
 
     /**

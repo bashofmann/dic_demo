@@ -9,6 +9,7 @@ class SqliteConnection {
     private $db;
 
     /**
+     * @inject
      * @param \dicdemo\FrontController $frontController
      */
     public function __construct(\dicdemo\FrontController $frontController) {

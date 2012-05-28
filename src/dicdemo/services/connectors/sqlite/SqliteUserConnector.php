@@ -9,6 +9,7 @@ class SqliteUserConnector implements \dicdemo\services\connectors\UserConnector 
     private $sqliteConnection;
 
     /**
+     * @inject
      * @param \dicdemo\services\connectors\sqlite\SqliteConnection $sqliteConnection
      */
     public function __construct(\dicdemo\services\connectors\sqlite\SqliteConnection $sqliteConnection) {
