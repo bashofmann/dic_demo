@@ -9,6 +9,7 @@ class UserService {
     private $userConnector;
 
     /**
+     * @inject
      * @var \Monolog\Logger
      */
     protected $logger;

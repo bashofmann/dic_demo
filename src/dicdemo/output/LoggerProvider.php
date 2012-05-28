@@ -1,7 +1,12 @@
 <?php
 namespace dicdemo\output;
 
-class LoggerProvider {
+/**
+ * @singleton
+ */
+class LoggerProvider implements \rg\injektor\Provider {
+
+    public static $CLASS = __CLASS__;
 
     /**
      * @var \Monolog\Logger
@@ -9,6 +14,7 @@ class LoggerProvider {
     private $logger;
 
     /**
+     * @inject
      * @param \dicdemo\FrontController $frontController
      */
     public function __construct(\dicdemo\FrontController $frontController) {

@@ -14,6 +14,7 @@ class MemcachedUserConnector implements \dicdemo\services\connectors\UserConnect
     private $cacheConnection;
 
     /**
+     * @inject
      * @var \Monolog\Logger
      */
     protected $logger;
