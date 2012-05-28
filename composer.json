@@ -1,6 +1,6 @@
 {
     "require":{
-
+        "monolog/monolog":"*"
     },
     "autoload":{
         "psr-0":{

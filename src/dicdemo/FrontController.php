@@ -10,17 +10,25 @@ class FrontController {
 
         $controller = new \dicdemo\controllers\BirthdayController(new \dicdemo\output\ConsoleOutput());
 
-        $controller->run(
-            new \dicdemo\services\UserService(
-                new \dicdemo\services\connectors\cache\MemcachedUserConnector(
-                    new \dicdemo\services\connectors\sqlite\SqliteUserConnector(
-                        new \dicdemo\services\connectors\sqlite\SqliteConnection(
-                            $this
-                        )
-                    ),
-                    new \dicdemo\services\connectors\cache\MemcachedConnection()
+        $memcachedConnector = new \dicdemo\services\connectors\cache\MemcachedUserConnector(
+            new \dicdemo\services\connectors\sqlite\SqliteUserConnector(
+                new \dicdemo\services\connectors\sqlite\SqliteConnection(
+                    $this
                 )
             ),
+            new \dicdemo\services\connectors\cache\MemcachedConnection()
+        );
+        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
+        $memcachedConnector->setLogger($loggerProvider->get());
+
+        $userService = new \dicdemo\services\UserService(
+            $memcachedConnector
+        );
+        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
+        $userService->setLogger($loggerProvider->get());
+
+        $controller->run(
+            $userService,
             $parameters['userId']
         );
     }
