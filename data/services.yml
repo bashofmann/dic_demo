@@ -1,4 +1,12 @@
 services:
+  logger_factory:
+    class: \dicdemo\output\LoggerProvider
+    arguments:
+      [@frontController]
+  logger:
+    class: \Monolog\Logger
+    factory_service: logger_factory
+    factory_method: get
   frontController:
     class: \dicdemo\FrontController
   memcachedConnection:
@@ -15,6 +23,8 @@ services:
     class: \dicdemo\services\connectors\cache\MemcachedUserConnector
     arguments:
       [@innerUserConnector,@memcachedConnection]
+    calls:
+      - [ setLogger, [ @logger ] ]
   output:
     class: \dicdemo\output\ConsoleOutput
   birthday_controller:
@@ -25,3 +35,5 @@ services:
     class: \dicdemo\services\UserService
     arguments:
       [@defaultUserConnector]
+    calls:
+      - [ setLogger, [ @logger ] ]
