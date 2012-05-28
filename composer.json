@@ -1,0 +1,11 @@
+{
+    "require":{
+
+    },
+    "autoload":{
+        "psr-0":{
+            "dicdemo":"src/"
+        }
+    }
+
+}
