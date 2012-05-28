@@ -8,24 +8,17 @@ class FrontController {
             'userId' => 1
         );
 
-        $controller = new \dicdemo\controllers\BirthdayController(new \dicdemo\output\ConsoleOutput());
+        $container = new \Symfony\Component\DependencyInjection\ContainerBuilder();
+        $loader = new \Symfony\Component\DependencyInjection\Loader\YamlFileLoader(
+            $container,
+            new \Symfony\Component\Config\FileLocator($this->getDataDir()));
+        $loader->load('services.yml');
 
-        $memcachedConnector = new \dicdemo\services\connectors\cache\MemcachedUserConnector(
-            new \dicdemo\services\connectors\sqlite\SqliteUserConnector(
-                new \dicdemo\services\connectors\sqlite\SqliteConnection(
-                    $this
-                )
-            ),
-            new \dicdemo\services\connectors\cache\MemcachedConnection()
-        );
-        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
-        $memcachedConnector->setLogger($loggerProvider->get());
+        /** @var \dicdemo\controllers\BirthdayController $controller  */
+        $controller = $container->get('birthday_controller');
 
-        $userService = new \dicdemo\services\UserService(
-            $memcachedConnector
-        );
-        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
-        $userService->setLogger($loggerProvider->get());
+        /** @var \dicdemo\services\UserService $userService  */
+        $userService = $container->get('user_service');
 
         $controller->run(
             $userService,

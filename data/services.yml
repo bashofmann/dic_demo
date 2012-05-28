@@ -1,0 +1,27 @@
+services:
+  frontController:
+    class: \dicdemo\FrontController
+  memcachedConnection:
+    class: \dicdemo\services\connectors\cache\MemcachedConnection
+  sqliteConnection:
+    class: \dicdemo\services\connectors\sqlite\SqliteConnection
+    arguments:
+      [@frontController]
+  innerUserConnector:
+    class: \dicdemo\services\connectors\sqlite\SqliteUserConnector
+    arguments:
+      [@sqliteConnection]
+  defaultUserConnector:
+    class: \dicdemo\services\connectors\cache\MemcachedUserConnector
+    arguments:
+      [@innerUserConnector,@memcachedConnection]
+  output:
+    class: \dicdemo\output\ConsoleOutput
+  birthday_controller:
+    class: \dicdemo\controllers\BirthdayController
+    arguments:
+      [@output]
+  user_service:
+    class: \dicdemo\services\UserService
+    arguments:
+      [@defaultUserConnector]
