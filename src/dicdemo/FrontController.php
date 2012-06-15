@@ -8,24 +8,17 @@ class FrontController {
             'userId' => 1
         );
 
-        $controller = new \dicdemo\controllers\BirthdayController(new \dicdemo\output\ConsoleOutput());
+        $di = new \Zend\Di\Di();
 
-        $memcachedConnector = new \dicdemo\services\connectors\cache\MemcachedUserConnector(
-            new \dicdemo\services\connectors\sqlite\SqliteUserConnector(
-                new \dicdemo\services\connectors\sqlite\SqliteConnection(
-                    $this
-                )
-            ),
-            new \dicdemo\services\connectors\cache\MemcachedConnection()
-        );
-        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
-        $memcachedConnector->setLogger($loggerProvider->get());
+        $config = include($this->getDataDir() . '/di_config.php');
 
-        $userService = new \dicdemo\services\UserService(
-            $memcachedConnector
-        );
-        $loggerProvider = new \dicdemo\output\LoggerProvider($this);
-        $userService->setLogger($loggerProvider->get());
+        $di->configure(new \Zend\Di\Configuration($config));
+
+        /** @var \dicdemo\controllers\BirthdayController $controller  */
+        $controller = $di->get(\dicdemo\controllers\BirthdayController::$CLASS);
+
+        /** @var \dicdemo\services\UserService $userService  */
+        $userService = $di->get(\dicdemo\services\UserService::$CLASS);
 
         $controller->run(
             $userService,

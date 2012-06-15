@@ -3,6 +3,7 @@ namespace dicdemo\controllers;
 
 class BirthdayController {
 
+    public static $CLASS = __CLASS__;
     /**
      * @var \dicdemo\output\Output
      */

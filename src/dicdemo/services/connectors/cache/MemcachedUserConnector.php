@@ -26,10 +26,10 @@ class MemcachedUserConnector implements \dicdemo\services\connectors\UserConnect
     }
 
     /**
-     * @param \dicdemo\services\connectors\UserConnector $innerConnector
+     * @param \dicdemo\services\connectors\sqlite\SqliteUserConnector $innerConnector
      * @param \dicdemo\services\connectors\cache\MemcachedConnection $cacheConnection
      */
-    public function __construct(\dicdemo\services\connectors\UserConnector $innerConnector,
+    public function __construct(\dicdemo\services\connectors\sqlite\SqliteUserConnector $innerConnector,
                                 \dicdemo\services\connectors\cache\MemcachedConnection $cacheConnection) {
         $this->innerConnector = $innerConnector;
         $this->cacheConnection = $cacheConnection;

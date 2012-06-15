@@ -3,6 +3,8 @@ namespace dicdemo\services;
 
 class UserService {
 
+    public static $CLASS = __CLASS__;
+
     /**
      * @var \dicdemo\services\connectors\UserConnector
      */

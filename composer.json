@@ -1,6 +1,7 @@
 {
     "require":{
-        "monolog/monolog":"*"
+        "monolog/monolog":"*",
+        "zendframework/zendframework":"*"
     },
     "autoload":{
         "psr-0":{
